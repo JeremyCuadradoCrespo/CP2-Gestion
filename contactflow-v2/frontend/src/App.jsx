@@ -15,6 +15,18 @@ import {
 } from "./api/contactApi.js";
 import { getSummaryReport } from "./api/reportApi.js";
 
+const THEME_STORAGE_KEY = "contactflow-theme";
+
+function getInitialTheme() {
+  const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+
+  if (savedTheme === "light" || savedTheme === "dark") {
+    return savedTheme;
+  }
+
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
 export default function App() {
   const [contacts, setContacts] = useState([]);
   const [selectedContact, setSelectedContact] = useState(null);
@@ -28,6 +40,12 @@ export default function App() {
   const [isSaving, setIsSaving] = useState(false);
   const [statusMessage, setStatusMessage] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [theme, setTheme] = useState(getInitialTheme);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+  }, [theme]);
 
   const loadContacts = useCallback(async () => {
     setIsLoading(true);
@@ -151,12 +169,18 @@ export default function App() {
     setIsSidebarOpen(false);
   }
 
+  function handleToggleTheme() {
+    setTheme((currentTheme) => (currentTheme === "dark" ? "light" : "dark"));
+  }
+
   return (
     <div className="app-shell">
       <AppHeader
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
         onToggleSidebar={() => setIsSidebarOpen((previo) => !previo)}
+        theme={theme}
+        onToggleTheme={handleToggleTheme}
       />
 
       <div className="app-body">
