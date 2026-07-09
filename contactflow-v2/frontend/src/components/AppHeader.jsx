@@ -1,6 +1,14 @@
 import SearchBar from "./SearchBar.jsx";
 
-export default function AppHeader({ searchTerm, onSearchChange, onToggleSidebar }) {
+export default function AppHeader({
+  searchTerm,
+  onSearchChange,
+  onToggleSidebar,
+  theme,
+  onToggleTheme
+}) {
+  const isDarkMode = theme === "dark";
+
   return (
     <header className="app-header">
       <button
@@ -29,8 +37,15 @@ export default function AppHeader({ searchTerm, onSearchChange, onToggleSidebar 
         <button type="button" className="icon-btn" aria-label="Ayuda">
           <span aria-hidden="true">?</span>
         </button>
-        <button type="button" className="icon-btn" aria-label="Configuracion">
-          <span aria-hidden="true">&#9881;</span>
+        <button
+          type="button"
+          className="icon-btn"
+          aria-label={isDarkMode ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+          aria-pressed={isDarkMode}
+          title={isDarkMode ? "Modo claro" : "Modo oscuro"}
+          onClick={onToggleTheme}
+        >
+          <span aria-hidden="true">{isDarkMode ? "\u2600" : "\u263E"}</span>
         </button>
         <button type="button" className="user-avatar" aria-label="Cuenta del usuario">
           J
