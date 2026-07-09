@@ -1,6 +1,9 @@
 :root {
+  color-scheme: light;
   --color-primary: #1a73e8;
+  --color-primary-strong: #1558b0;
   --color-primary-soft: #d3e3fd;
+  --color-primary-on-soft: #0b57cf;
   --color-bg: #f8fafd;
   --color-surface: #ffffff;
   --color-sidebar: #f5f7fb;
@@ -9,6 +12,8 @@
   --color-border: #dadce0;
   --color-hover: #f1f3f4;
   --color-danger: #d93025;
+  --color-danger-soft: #fce8e6;
+  --color-danger-soft-hover: #f6c6c1;
   --color-success: #188038;
   --radius-sm: 0.5rem;
   --radius-md: 1rem;
@@ -19,6 +24,27 @@
   --header-height: 4rem;
   --sidebar-width: 17rem;
   --details-width: 22rem;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --color-primary: #8ab4f8;
+  --color-primary-strong: #aecbfa;
+  --color-primary-soft: #17345f;
+  --color-primary-on-soft: #d2e3fc;
+  --color-bg: #111418;
+  --color-surface: #1b1f24;
+  --color-sidebar: #171b20;
+  --color-text: #e8eaed;
+  --color-muted: #b6bdc6;
+  --color-border: #30363d;
+  --color-hover: #252b32;
+  --color-danger: #f28b82;
+  --color-danger-soft: #3f1d1c;
+  --color-danger-soft-hover: #5a2623;
+  --color-success: #81c995;
+  --shadow-sm: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.45);
 }
 
 * {
@@ -256,7 +282,7 @@ a {
   border-radius: var(--radius-lg);
   border: none;
   background-color: var(--color-primary-soft);
-  color: #0b57cf;
+  color: var(--color-primary-on-soft);
   font-weight: 600;
   font-size: 0.95rem;
   cursor: pointer;
@@ -320,12 +346,12 @@ a {
 
 .sidebar-nav-item.is-active {
   background-color: var(--color-primary-soft);
-  color: #0b57cf;
+  color: var(--color-primary-on-soft);
   font-weight: 600;
 }
 
 .sidebar-nav-item.is-active .nav-icon {
-  color: #0b57cf;
+  color: var(--color-primary-on-soft);
 }
 
 .sidebar-nav-item .nav-count {
@@ -608,7 +634,7 @@ a {
 .alphabet-nav button:hover,
 .alphabet-nav button:focus-visible {
   background-color: var(--color-primary-soft);
-  color: #0b57cf;
+  color: var(--color-primary-on-soft);
   outline: none;
 }
 
@@ -723,7 +749,7 @@ a {
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #1558b0;
+  background-color: var(--color-primary-strong);
 }
 
 .btn-secondary {
@@ -732,12 +758,12 @@ a {
 }
 
 .btn-danger {
-  background-color: #fce8e6;
+  background-color: var(--color-danger-soft);
   color: var(--color-danger);
 }
 
 .btn-danger:hover:not(:disabled) {
-  background-color: #f6c6c1;
+  background-color: var(--color-danger-soft-hover);
 }
 
 .btn-text {
