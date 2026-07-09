@@ -1,0 +1,72 @@
+name: Integracion Continua
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  validate-v1-backend:
+    name: Validar Backend V1
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Instalar dependencias
+        working-directory: contactflow-v1/backend
+        run: npm install
+      - name: Validar sintaxis backend
+        working-directory: contactflow-v1/backend
+        run: npm run check
+
+  build-v1-frontend:
+    name: Construir Frontend V1
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Instalar dependencias
+        working-directory: contactflow-v1/frontend
+        run: npm install
+      - name: Construir frontend
+        working-directory: contactflow-v1/frontend
+        run: npm run build
+
+  validate-v2-backend:
+    name: Validar Backend V2
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Instalar dependencias
+        working-directory: contactflow-v2/backend
+        run: npm install
+      - name: Validar sintaxis backend
+        working-directory: contactflow-v2/backend
+        run: npm run check
+
+  build-v2-frontend:
+    name: Construir Frontend V2
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Instalar dependencias
+        working-directory: contactflow-v2/frontend
+        run: npm install
+      - name: Construir frontend
+        working-directory: contactflow-v2/frontend
+        run: npm run build
