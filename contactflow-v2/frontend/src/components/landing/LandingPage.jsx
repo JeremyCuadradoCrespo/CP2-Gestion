@@ -13,15 +13,7 @@ export default function LandingPage({ onEnterApp }) {
     <div className="landing-page">
       <LandingHeader onEnterApp={onEnterApp} />
       <main>
-        <section className="landing-entry" aria-labelledby="landing-entry-title">
-          <p className="landing-eyebrow">ContactFlow DevOps</p>
-          <h1 id="landing-entry-title">ContactFlow V2</h1>
-          <p>Presentacion profesional del sistema antes de ingresar a la agenda de contactos.</p>
-          <button type="button" className="landing-primary-action" onClick={onEnterApp}>
-            Ingresar a la agenda
-          </button>
-        </section>
-        <HeroSection />
+        <HeroSection onEnterApp={onEnterApp} />
         <ProblemSolutionSection />
         <FeatureSection />
         <ArchitectureSection />
