@@ -71,6 +71,16 @@
 }
 
 @media (max-width: 767.98px) {
+  .app-header {
+    gap: 0.5rem;
+    padding-inline: 0.75rem;
+  }
+
+  .search-field-wrapper {
+    gap: 0.45rem;
+    padding-inline: 0.75rem;
+  }
+
   .col-phone {
     display: none;
   }
@@ -108,5 +118,27 @@
   .alphabet-nav {
     align-self: stretch;
     justify-content: center;
+  }
+}
+
+@media (max-width: 31.98rem) {
+  .user-avatar {
+    display: none;
+  }
+}
+
+@media (max-width: 23.98rem) {
+  .app-header {
+    gap: 0.35rem;
+    padding-inline: 0.5rem;
+  }
+
+  .icon-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .search-field-wrapper {
+    padding-inline: 0.55rem;
   }
 }
