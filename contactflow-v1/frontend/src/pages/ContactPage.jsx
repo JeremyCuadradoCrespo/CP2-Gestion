@@ -72,7 +72,7 @@ export default function ContactsPage() {
     return (
         <div className="contacts-page">
             <header className="contacts-header">
-                <nav className="contacts-nav">
+                <nav className="contacts-navbar">
                     <Link to="/" className="contacts-back-link">
                         ← Volver al inicio
                     </Link>
