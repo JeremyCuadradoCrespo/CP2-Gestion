@@ -6,7 +6,7 @@ export default function App() {
   const [currentView, setCurrentView] = useState("landing");
 
   if (currentView === "contacts") {
-    return <ContactsApp />;
+    return <ContactsApp onBackToLanding={() => setCurrentView("landing")} />;
   }
 
   return <LandingPage onEnterApp={() => setCurrentView("contacts")} />;

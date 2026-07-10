@@ -27,7 +27,7 @@ function getInitialTheme() {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
-export default function ContactsApp() {
+export default function ContactsApp({ onBackToLanding }) {
   const [contacts, setContacts] = useState([]);
   const [selectedContact, setSelectedContact] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -181,6 +181,7 @@ export default function ContactsApp() {
         onToggleSidebar={() => setIsSidebarOpen((previo) => !previo)}
         theme={theme}
         onToggleTheme={handleToggleTheme}
+        onBackToLanding={onBackToLanding}
       />
 
       <div className="app-body">
