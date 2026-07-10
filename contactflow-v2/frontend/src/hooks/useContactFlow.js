@@ -1,19 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import AppHeader from "../layout/AppHeader.jsx";
-import Sidebar from "../layout/Sidebar.jsx";
-import ContactModal from "./ContactModal.jsx";
-import ContactTable from "./ContactTable.jsx";
-import ContactDetailsPanel from "./ContactDetailsPanel.jsx";
-import ReportPanel from "./ReportPanel.jsx";
-import CategoryFilter from "../filters/CategoryFilter.jsx";
-import StatusMessage from "../feedback/StatusMessage.jsx";
 import {
-  getContacts,
   createContact,
-  updateContact,
-  deleteContact
-} from "../../api/contactApi.js";
-import { getSummaryReport } from "../../api/reportApi.js";
+  deleteContact,
+  getContacts,
+  updateContact
+} from "../api/contactApi.js";
+import { getSummaryReport } from "../api/reportApi.js";
 
 const THEME_STORAGE_KEY = "contactflow-theme";
 
@@ -27,7 +19,7 @@ function getInitialTheme() {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
-export default function ContactsApp({ onBackToLanding }) {
+export default function useContactFlow() {
   const [contacts, setContacts] = useState([]);
   const [selectedContact, setSelectedContact] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -132,12 +124,13 @@ export default function ContactsApp({ onBackToLanding }) {
     }
   }
 
-  function handleFormSubmit(datos) {
+  async function handleFormSubmit(datos) {
     if (editingContact) {
-      handleUpdateContact(editingContact.id, datos);
-    } else {
-      handleCreateContact(datos);
+      await handleUpdateContact(editingContact.id, datos);
+      return;
     }
+
+    await handleCreateContact(datos);
   }
 
   async function handleDeleteContact(id) {
@@ -160,8 +153,16 @@ export default function ContactsApp({ onBackToLanding }) {
     }
   }
 
+  function handleSearchChange(valor) {
+    setSearchTerm(valor);
+  }
+
   function handleSelectContact(contacto) {
     setSelectedContact(contacto);
+  }
+
+  function handleCloseDetails() {
+    setSelectedContact(null);
   }
 
   function handleCategoryChange(categoria) {
@@ -169,77 +170,47 @@ export default function ContactsApp({ onBackToLanding }) {
     setIsSidebarOpen(false);
   }
 
+  function handleToggleSidebar() {
+    setIsSidebarOpen((previo) => !previo);
+  }
+
+  function handleCloseSidebar() {
+    setIsSidebarOpen(false);
+  }
+
   function handleToggleTheme() {
     setTheme((currentTheme) => (currentTheme === "dark" ? "light" : "dark"));
   }
 
-  return (
-    <div className="app-shell">
-      <AppHeader
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        onToggleSidebar={() => setIsSidebarOpen((previo) => !previo)}
-        theme={theme}
-        onToggleTheme={handleToggleTheme}
-        onBackToLanding={onBackToLanding}
-      />
-
-      <div className="app-body">
-        <Sidebar
-          isOpen={isSidebarOpen}
-          totalContacts={report ? report.total : contacts.length}
-          selectedCategory={selectedCategory}
-          onCategoryChange={handleCategoryChange}
-          onCreateContact={handleOpenCreateModal}
-          onCloseSidebar={() => setIsSidebarOpen(false)}
-        />
-
-        <main className="main-content">
-          <section className="contacts-section" aria-labelledby="contacts-title">
-            <StatusMessage message={statusMessage} />
-
-            <ReportPanel resumen={report} isLoading={isReportLoading} />
-
-            <div className="contacts-heading">
-              <h1 id="contacts-title">Contactos</h1>
-              <span className="contacts-count">{contacts.length} contactos</span>
-            </div>
-
-            <div className="contacts-toolbar">
-              <CategoryFilter value={selectedCategory} onChange={handleCategoryChange} />
-            </div>
-
-            <ContactTable
-              contacts={contacts}
-              isLoading={isLoading}
-              onEdit={handleOpenEditModal}
-              onDelete={handleDeleteContact}
-              onSelect={handleSelectContact}
-              selectedContactId={selectedContact?.id}
-            />
-          </section>
-        </main>
-
-        <ContactDetailsPanel
-          contact={selectedContact}
-          onEdit={handleOpenEditModal}
-          onDelete={handleDeleteContact}
-          onClose={() => setSelectedContact(null)}
-        />
-      </div>
-
-      <ContactModal
-        isOpen={isModalOpen}
-        mode={editingContact ? "edit" : "create"}
-        initialData={editingContact}
-        onSubmit={handleFormSubmit}
-        onCancel={handleCloseModal}
-        isSaving={isSaving}
-      />
-
-      <footer className="app-footer">
-        <p>Proyecto academico - ContactFlow V2, agenda de contactos avanzada con arquitectura full stack.</p>
-      </footer>
-    </div>
-  );
+  return {
+    state: {
+      contacts,
+      editingContact,
+      isLoading,
+      isModalOpen,
+      isReportLoading,
+      isSaving,
+      isSidebarOpen,
+      report,
+      searchTerm,
+      selectedCategory,
+      selectedContact,
+      statusMessage,
+      theme
+    },
+    actions: {
+      handleCategoryChange,
+      handleCloseDetails,
+      handleCloseModal,
+      handleCloseSidebar,
+      handleDeleteContact,
+      handleFormSubmit,
+      handleOpenCreateModal,
+      handleOpenEditModal,
+      handleSearchChange,
+      handleSelectContact,
+      handleToggleSidebar,
+      handleToggleTheme
+    }
+  };
 }

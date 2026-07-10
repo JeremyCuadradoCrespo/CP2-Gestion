@@ -4,11 +4,13 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  min-width: 0;
 }
 
 .app-body {
   display: flex;
-  flex: 1;
-  min-height: calc(100vh - var(--header-height));
+  flex: 1 0 auto;
+  min-height: 0;
+  min-width: 0;
   position: relative;
 }
