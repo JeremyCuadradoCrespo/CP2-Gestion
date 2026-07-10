@@ -123,3 +123,15 @@
 .contact-row td.actions-cell {
   text-align: right;
 }
+
+.favorite-btn {
+  width: 1.9rem;
+  height: 1.9rem;
+  font-size: 1.15rem;
+  color: var(--color-muted);
+  flex-shrink: 0;
+}
+
+.favorite-btn.is-favorite {
+  color: #f4b400;
+}

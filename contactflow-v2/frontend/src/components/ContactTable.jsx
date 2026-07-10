@@ -8,9 +8,13 @@ const ALFABETO = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 export default function ContactTable({
   contacts,
   isLoading,
+  view = "todos",
   onEdit,
   onDelete,
   onSelect,
+  onToggleFavorite,
+  onRestore,
+  onPermanentDelete,
   selectedContactId
 }) {
   const filasRef = useRef(new Map());
@@ -53,8 +57,12 @@ export default function ContactTable({
   if (!contacts || contacts.length === 0) {
     return (
       <EmptyState
-        titulo="No hay contactos"
-        descripcion="No se encontraron contactos con los filtros actuales. Crea uno nuevo o ajusta la busqueda."
+        titulo={view === "papelera" ? "La papelera esta vacia" : "No hay contactos"}
+        descripcion={
+          view === "papelera"
+            ? "Los contactos eliminados apareceran aqui y podras restaurarlos o borrarlos definitivamente."
+            : "No se encontraron contactos con los filtros actuales. Crea uno nuevo o ajusta la busqueda."
+        }
       />
     );
   }
@@ -78,9 +86,13 @@ export default function ContactTable({
                 key={contacto.id}
                 contacto={contacto}
                 isSelected={contacto.id === selectedContactId}
+                view={view}
                 onEdit={onEdit}
                 onDelete={onDelete}
                 onSelect={onSelect}
+                onToggleFavorite={onToggleFavorite}
+                onRestore={onRestore}
+                onPermanentDelete={onPermanentDelete}
                 rowRef={(nodo) => registrarFila(contacto.id, nodo)}
               />
             ))}

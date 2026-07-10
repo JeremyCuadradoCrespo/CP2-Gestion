@@ -5,10 +5,11 @@ import { query } from "../config/db.js";
  * relacionada con los contactos de ContactFlow V2.
  */
 
-const COLUMNAS = "id, nombre, apellido, telefono, correo, categoria, notas, fecha_creacion, fecha_actualizacion";
+const COLUMNAS =
+  "id, nombre, apellido, telefono, correo, categoria, notas, favorito, eliminado, fecha_creacion, fecha_actualizacion, fecha_eliminacion";
 
-export async function listarContactos({ search, category } = {}) {
-  const condiciones = [];
+export async function listarContactos({ search, category, favorito } = {}) {
+  const condiciones = ["eliminado = FALSE"];
   const valores = [];
 
   if (search) {
@@ -24,13 +25,25 @@ export async function listarContactos({ search, category } = {}) {
     condiciones.push(`categoria = $${valores.length}`);
   }
 
-  const where = condiciones.length > 0 ? `WHERE ${condiciones.join(" AND ")}` : "";
+  if (favorito !== undefined) {
+    valores.push(favorito);
+    condiciones.push(`favorito = $${valores.length}`);
+  }
+
+  const where = `WHERE ${condiciones.join(" AND ")}`;
 
   const resultado = await query(
     `SELECT ${COLUMNAS} FROM contacts ${where} ORDER BY fecha_creacion DESC`,
     valores
   );
 
+  return resultado.rows;
+}
+
+export async function listarPapelera() {
+  const resultado = await query(
+    `SELECT ${COLUMNAS} FROM contacts WHERE eliminado = TRUE ORDER BY fecha_eliminacion DESC`
+  );
   return resultado.rows;
 }
 
@@ -94,7 +107,55 @@ export async function actualizarContacto(id, datos) {
   return resultado.rows[0] || null;
 }
 
-export async function eliminarContacto(id) {
-  const resultado = await query("DELETE FROM contacts WHERE id = $1 RETURNING id", [id]);
+export async function marcarFavorito(id, favorito) {
+  const resultado = await query(
+    `UPDATE contacts SET favorito = $1 WHERE id = $2 AND eliminado = FALSE RETURNING ${COLUMNAS}`,
+    [favorito, id]
+  );
+  return resultado.rows[0] || null;
+}
+
+export async function moverAPapelera(id) {
+  const resultado = await query(
+    `UPDATE contacts SET eliminado = TRUE, fecha_eliminacion = CURRENT_TIMESTAMP
+     WHERE id = $1 AND eliminado = FALSE RETURNING id`,
+    [id]
+  );
   return resultado.rowCount > 0;
+}
+
+export async function restaurarContacto(id) {
+  const resultado = await query(
+    `UPDATE contacts SET eliminado = FALSE, fecha_eliminacion = NULL
+     WHERE id = $1 AND eliminado = TRUE RETURNING ${COLUMNAS}`,
+    [id]
+  );
+  return resultado.rows[0] || null;
+}
+
+export async function eliminarContactoPermanente(id) {
+  const resultado = await query(
+    "DELETE FROM contacts WHERE id = $1 AND eliminado = TRUE RETURNING id",
+    [id]
+  );
+  return resultado.rowCount > 0;
+}
+
+export async function importarContactos(lista) {
+  const resultado = { creados: [], omitidos: [] };
+
+  for (const item of lista) {
+    const correo = item.correo.trim().toLowerCase();
+    const existente = await obtenerContactoPorCorreo(correo);
+
+    if (existente) {
+      resultado.omitidos.push({ correo, motivo: "Ya existe un contacto con ese correo." });
+      continue;
+    }
+
+    const creado = await crearContacto(item);
+    resultado.creados.push(creado);
+  }
+
+  return resultado;
 }

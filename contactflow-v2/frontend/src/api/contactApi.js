@@ -13,9 +13,9 @@ async function manejarRespuesta(response) {
 
 /**
  * Obtiene la lista de contactos, aceptando filtros opcionales
- * de busqueda (search) y categoria (category).
+ * de busqueda (search), categoria (category) y favorito (true/false).
  */
-export async function getContacts({ search, category } = {}) {
+export async function getContacts({ search, category, favorito } = {}) {
   const parametros = new URLSearchParams();
 
   if (search) {
@@ -26,6 +26,10 @@ export async function getContacts({ search, category } = {}) {
     parametros.set("category", category);
   }
 
+  if (favorito !== undefined) {
+    parametros.set("favorito", String(favorito));
+  }
+
   const query = parametros.toString();
 
   try {
@@ -33,6 +37,15 @@ export async function getContacts({ search, category } = {}) {
     return await manejarRespuesta(response);
   } catch (error) {
     throw new Error(error.message || "No fue posible obtener los contactos.");
+  }
+}
+
+export async function getTrash() {
+  try {
+    const response = await fetch(`${API_URL}/contacts/trash`);
+    return await manejarRespuesta(response);
+  } catch (error) {
+    throw new Error(error.message || "No fue posible obtener la papelera.");
   }
 }
 
@@ -71,6 +84,19 @@ export async function updateContact(id, contactData) {
   }
 }
 
+export async function toggleFavorite(id, favorito) {
+  try {
+    const response = await fetch(`${API_URL}/contacts/${id}/favorito`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ favorito })
+    });
+    return await manejarRespuesta(response);
+  } catch (error) {
+    throw new Error(error.message || "No fue posible actualizar el contacto favorito.");
+  }
+}
+
 export async function deleteContact(id) {
   try {
     const response = await fetch(`${API_URL}/contacts/${id}`, {
@@ -79,5 +105,40 @@ export async function deleteContact(id) {
     return await manejarRespuesta(response);
   } catch (error) {
     throw new Error(error.message || "No fue posible eliminar el contacto.");
+  }
+}
+
+export async function restoreContact(id) {
+  try {
+    const response = await fetch(`${API_URL}/contacts/${id}/restaurar`, {
+      method: "POST"
+    });
+    return await manejarRespuesta(response);
+  } catch (error) {
+    throw new Error(error.message || "No fue posible restaurar el contacto.");
+  }
+}
+
+export async function deleteContactPermanently(id) {
+  try {
+    const response = await fetch(`${API_URL}/contacts/${id}/permanente`, {
+      method: "DELETE"
+    });
+    return await manejarRespuesta(response);
+  } catch (error) {
+    throw new Error(error.message || "No fue posible eliminar el contacto definitivamente.");
+  }
+}
+
+export async function importContacts(contactos) {
+  try {
+    const response = await fetch(`${API_URL}/contacts/import`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ contactos })
+    });
+    return await manejarRespuesta(response);
+  } catch (error) {
+    throw new Error(error.message || "No fue posible importar los contactos.");
   }
 }

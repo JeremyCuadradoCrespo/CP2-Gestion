@@ -105,7 +105,7 @@ contactflow-v2/
 
 ## Base de datos
 
-Tabla `contacts` en PostgreSQL con los campos: `id`, `nombre`, `apellido`, `telefono`, `correo`, `categoria`, `notas`, `fecha_creacion`, `fecha_actualizacion`. Categorias validas: Personal, Trabajo, Universidad, Familia, Otro.
+Tabla `contacts` en PostgreSQL con los campos: `id`, `nombre`, `apellido`, `telefono`, `correo`, `categoria`, `notas`, `favorito`, `eliminado`, `fecha_eliminacion`, `fecha_creacion`, `fecha_actualizacion`. Categorias validas: Personal, Trabajo, Universidad, Familia, Otro.
 
 `database/seed.sql` incluye 24 contactos de prueba con nombres, telefonos, correos, categorias y notas realistas, para que la interfaz se vea completa durante la exposicion.
 
@@ -114,6 +114,8 @@ createdb contactflow_v2
 psql -U usuario -d contactflow_v2 -f backend/database/schema.sql
 psql -U usuario -d contactflow_v2 -f backend/database/seed.sql
 ```
+
+**Importante:** no hay un sistema de migraciones automatico. Cada vez que `backend/database/schema.sql` cambie en un `git pull` (por ejemplo, al agregar las columnas `favorito`/`eliminado`/`fecha_eliminacion`), hay que volver a correr el `psql -f backend/database/schema.sql` contra la base local antes de levantar el backend. Es seguro re-ejecutarlo: usa `CREATE TABLE IF NOT EXISTS` y `ALTER TABLE ... ADD COLUMN IF NOT EXISTS`, asi que no borra datos existentes. Si se omite este paso, los endpoints de favoritos/papelera/importar fallan con un error de Postgres tipo `column "favorito" does not exist`.
 
 ## Variables de entorno
 

@@ -54,17 +54,24 @@ psql -U usuario -d contactflow_v2 -f database/seed.sql
 
 `seed.sql` incluye 24 contactos de prueba con categorias y notas variadas, pensados para que el listado se vea completo en la interfaz.
 
+**Importante:** no hay un sistema de migraciones automatico. Cada vez que `database/schema.sql` cambie en un `git pull`, hay que volver a correr `psql -f database/schema.sql` contra la base local antes de levantar el backend. Es seguro re-ejecutarlo: usa `CREATE TABLE IF NOT EXISTS` y `ALTER TABLE ... ADD COLUMN IF NOT EXISTS`, asi que no borra datos existentes. Si se omite este paso, los endpoints que dependen de columnas nuevas (por ejemplo `favorito`, `eliminado`) fallan con un error de Postgres tipo `column "favorito" does not exist`.
+
 ## Endpoints
 
-| Metodo | Ruta                    | Descripcion                                  |
-|--------|--------------------------|-----------------------------------------------|
-| GET    | /api/health               | Estado del servicio                           |
-| GET    | /api/contacts              | Lista contactos (acepta `search`, `category`) |
-| GET    | /api/contacts/:id          | Obtiene un contacto                           |
-| POST   | /api/contacts               | Crea un contacto                              |
-| PUT    | /api/contacts/:id           | Actualiza un contacto                         |
-| DELETE | /api/contacts/:id           | Elimina un contacto                           |
-| GET    | /api/reports/summary        | Reporte por categoria                         |
+| Metodo | Ruta                        | Descripcion                                              |
+|--------|------------------------------|-----------------------------------------------------------|
+| GET    | /api/health                  | Estado del servicio                                       |
+| GET    | /api/contacts                | Lista contactos (acepta `search`, `category`, `favorito`) |
+| GET    | /api/contacts/trash          | Lista contactos en la papelera                            |
+| GET    | /api/contacts/:id            | Obtiene un contacto                                       |
+| POST   | /api/contacts                | Crea un contacto                                          |
+| POST   | /api/contacts/import         | Importa contactos en bloque (`{ contactos: [...] }`)      |
+| PUT    | /api/contacts/:id            | Actualiza un contacto                                     |
+| PATCH  | /api/contacts/:id/favorito   | Marca/desmarca un contacto como favorito                  |
+| DELETE | /api/contacts/:id            | Mueve un contacto a la papelera (borrado logico)          |
+| POST   | /api/contacts/:id/restaurar  | Restaura un contacto desde la papelera                    |
+| DELETE | /api/contacts/:id/permanente | Elimina definitivamente un contacto de la papelera         |
+| GET    | /api/reports/summary         | Reporte por categoria                                     |
 
 `GET /api/health` responde:
 

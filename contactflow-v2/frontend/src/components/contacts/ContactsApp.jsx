@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import AppHeader from "../AppHeader.jsx";
 import Sidebar from "../Sidebar.jsx";
 import ContactModal from "../ContactModal.jsx";
+import ImportModal from "../ImportModal.jsx";
 import ContactTable from "../ContactTable.jsx";
 import ContactDetailsPanel from "../ContactDetailsPanel.jsx";
 import ReportPanel from "../ReportPanel.jsx";
@@ -9,13 +10,25 @@ import CategoryFilter from "../CategoryFilter.jsx";
 import StatusMessage from "../StatusMessage.jsx";
 import {
   getContacts,
+  getTrash,
   createContact,
   updateContact,
-  deleteContact
+  toggleFavorite,
+  deleteContact,
+  restoreContact,
+  deleteContactPermanently,
+  importContacts
 } from "../../api/contactApi.js";
 import { getSummaryReport } from "../../api/reportApi.js";
 
 const THEME_STORAGE_KEY = "contactflow-theme";
+
+const VISTA_TITULOS = {
+  todos: "Contactos",
+  frecuentes: "Frecuentes",
+  otros: "Otros contactos",
+  papelera: "Papelera"
+};
 
 function getInitialTheme() {
   const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
@@ -31,6 +44,7 @@ export default function ContactsApp({ onBackToLanding }) {
   const [contacts, setContacts] = useState([]);
   const [selectedContact, setSelectedContact] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [view, setView] = useState("todos");
   const [searchTerm, setSearchTerm] = useState("");
   const [report, setReport] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -41,6 +55,9 @@ export default function ContactsApp({ onBackToLanding }) {
   const [statusMessage, setStatusMessage] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [theme, setTheme] = useState(getInitialTheme);
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
+  const [isImporting, setIsImporting] = useState(false);
+  const [importResult, setImportResult] = useState(null);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -50,14 +67,20 @@ export default function ContactsApp({ onBackToLanding }) {
   const loadContacts = useCallback(async () => {
     setIsLoading(true);
     try {
-      const respuesta = await getContacts({ search: searchTerm, category: selectedCategory });
-      setContacts(respuesta.data);
+      if (view === "papelera") {
+        const respuesta = await getTrash();
+        setContacts(respuesta.data);
+      } else {
+        const favorito = view === "frecuentes" ? true : view === "otros" ? false : undefined;
+        const respuesta = await getContacts({ search: searchTerm, category: selectedCategory, favorito });
+        setContacts(respuesta.data);
+      }
     } catch (error) {
       setStatusMessage({ tipo: "error", texto: error.message });
     } finally {
       setIsLoading(false);
     }
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, view]);
 
   const loadReport = useCallback(async () => {
     setIsReportLoading(true);
@@ -144,7 +167,7 @@ export default function ContactsApp({ onBackToLanding }) {
     setStatusMessage(null);
     try {
       await deleteContact(id);
-      setStatusMessage({ tipo: "exito", texto: "Contacto eliminado correctamente." });
+      setStatusMessage({ tipo: "exito", texto: "Contacto movido a la papelera." });
 
       if (selectedContact && selectedContact.id === id) {
         setSelectedContact(null);
@@ -160,6 +183,53 @@ export default function ContactsApp({ onBackToLanding }) {
     }
   }
 
+  async function handleToggleFavorite(contacto) {
+    setStatusMessage(null);
+    try {
+      const respuesta = await toggleFavorite(contacto.id, !contacto.favorito);
+
+      if (selectedContact && selectedContact.id === contacto.id) {
+        setSelectedContact(respuesta.data);
+      }
+
+      await loadContacts();
+    } catch (error) {
+      setStatusMessage({ tipo: "error", texto: error.message });
+    }
+  }
+
+  async function handleRestoreContact(id) {
+    setStatusMessage(null);
+    try {
+      await restoreContact(id);
+      setStatusMessage({ tipo: "exito", texto: "Contacto restaurado correctamente." });
+
+      if (selectedContact && selectedContact.id === id) {
+        setSelectedContact(null);
+      }
+
+      await Promise.all([loadContacts(), loadReport()]);
+    } catch (error) {
+      setStatusMessage({ tipo: "error", texto: error.message });
+    }
+  }
+
+  async function handlePermanentDelete(id) {
+    setStatusMessage(null);
+    try {
+      await deleteContactPermanently(id);
+      setStatusMessage({ tipo: "exito", texto: "Contacto eliminado definitivamente." });
+
+      if (selectedContact && selectedContact.id === id) {
+        setSelectedContact(null);
+      }
+
+      await loadContacts();
+    } catch (error) {
+      setStatusMessage({ tipo: "error", texto: error.message });
+    }
+  }
+
   function handleSelectContact(contacto) {
     setSelectedContact(contacto);
   }
@@ -167,6 +237,41 @@ export default function ContactsApp({ onBackToLanding }) {
   function handleCategoryChange(categoria) {
     setSelectedCategory(categoria);
     setIsSidebarOpen(false);
+  }
+
+  function handleViewChange(nuevaVista) {
+    setView(nuevaVista);
+    setSelectedContact(null);
+    setIsSidebarOpen(false);
+  }
+
+  function handleOpenImport() {
+    setImportResult(null);
+    setIsImportModalOpen(true);
+    setIsSidebarOpen(false);
+  }
+
+  function handleCloseImport() {
+    setIsImportModalOpen(false);
+    setImportResult(null);
+  }
+
+  async function handleImportContacts(contactos) {
+    setIsImporting(true);
+    setStatusMessage(null);
+    try {
+      const respuesta = await importContacts(contactos);
+      setImportResult(respuesta.data);
+      setStatusMessage({
+        tipo: "exito",
+        texto: `${respuesta.data.creados.length} contactos importados correctamente.`
+      });
+      await Promise.all([loadContacts(), loadReport()]);
+    } catch (error) {
+      setStatusMessage({ tipo: "error", texto: error.message });
+    } finally {
+      setIsImporting(false);
+    }
   }
 
   function handleToggleTheme() {
@@ -188,9 +293,12 @@ export default function ContactsApp({ onBackToLanding }) {
         <Sidebar
           isOpen={isSidebarOpen}
           totalContacts={report ? report.total : contacts.length}
+          activeView={view}
           selectedCategory={selectedCategory}
           onCategoryChange={handleCategoryChange}
+          onViewChange={handleViewChange}
           onCreateContact={handleOpenCreateModal}
+          onOpenImport={handleOpenImport}
           onCloseSidebar={() => setIsSidebarOpen(false)}
         />
 
@@ -201,20 +309,26 @@ export default function ContactsApp({ onBackToLanding }) {
             <ReportPanel resumen={report} isLoading={isReportLoading} />
 
             <div className="contacts-heading">
-              <h1 id="contacts-title">Contactos</h1>
+              <h1 id="contacts-title">{VISTA_TITULOS[view]}</h1>
               <span className="contacts-count">{contacts.length} contactos</span>
             </div>
 
-            <div className="contacts-toolbar">
-              <CategoryFilter value={selectedCategory} onChange={handleCategoryChange} />
-            </div>
+            {view !== "papelera" && (
+              <div className="contacts-toolbar">
+                <CategoryFilter value={selectedCategory} onChange={handleCategoryChange} />
+              </div>
+            )}
 
             <ContactTable
               contacts={contacts}
               isLoading={isLoading}
+              view={view}
               onEdit={handleOpenEditModal}
               onDelete={handleDeleteContact}
               onSelect={handleSelectContact}
+              onToggleFavorite={handleToggleFavorite}
+              onRestore={handleRestoreContact}
+              onPermanentDelete={handlePermanentDelete}
               selectedContactId={selectedContact?.id}
             />
           </section>
@@ -222,11 +336,22 @@ export default function ContactsApp({ onBackToLanding }) {
 
         <ContactDetailsPanel
           contact={selectedContact}
+          view={view}
           onEdit={handleOpenEditModal}
           onDelete={handleDeleteContact}
+          onRestore={handleRestoreContact}
+          onPermanentDelete={handlePermanentDelete}
           onClose={() => setSelectedContact(null)}
         />
       </div>
+
+      <ImportModal
+        isOpen={isImportModalOpen}
+        onImport={handleImportContacts}
+        onCancel={handleCloseImport}
+        isImporting={isImporting}
+        resultado={importResult}
+      />
 
       <ContactModal
         isOpen={isModalOpen}

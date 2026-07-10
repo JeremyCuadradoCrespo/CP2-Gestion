@@ -11,8 +11,17 @@ function formatearFecha(fecha) {
   });
 }
 
-export default function ContactDetailsPanel({ contact, onEdit, onDelete, onClose }) {
+export default function ContactDetailsPanel({
+  contact,
+  view = "todos",
+  onEdit,
+  onDelete,
+  onRestore,
+  onPermanentDelete,
+  onClose
+}) {
   const estaAbierto = Boolean(contact);
+  const enPapelera = view === "papelera";
 
   return (
     <aside
@@ -64,12 +73,25 @@ export default function ContactDetailsPanel({ contact, onEdit, onDelete, onClose
           </dl>
 
           <div className="details-panel-actions">
-            <button type="button" className="btn btn-primary" onClick={() => onEdit(contact)}>
-              Editar
-            </button>
-            <button type="button" className="btn btn-danger" onClick={() => onDelete(contact.id)}>
-              Eliminar
-            </button>
+            {enPapelera ? (
+              <>
+                <button type="button" className="btn btn-primary" onClick={() => onRestore(contact.id)}>
+                  Restaurar
+                </button>
+                <button type="button" className="btn btn-danger" onClick={() => onPermanentDelete(contact.id)}>
+                  Eliminar definitivamente
+                </button>
+              </>
+            ) : (
+              <>
+                <button type="button" className="btn btn-primary" onClick={() => onEdit(contact)}>
+                  Editar
+                </button>
+                <button type="button" className="btn btn-danger" onClick={() => onDelete(contact.id)}>
+                  Eliminar
+                </button>
+              </>
+            )}
             <button type="button" className="btn btn-text" onClick={onClose}>
               Cerrar
             </button>

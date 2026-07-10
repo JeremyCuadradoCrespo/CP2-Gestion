@@ -30,9 +30,12 @@ function NavIcon({ name }) {
 export default function Sidebar({
   isOpen,
   totalContacts,
+  activeView,
   selectedCategory,
   onCategoryChange,
+  onViewChange,
   onCreateContact,
+  onOpenImport,
   onCloseSidebar
 }) {
   return (
@@ -50,8 +53,8 @@ export default function Sidebar({
         <nav className="sidebar-nav" aria-label="Vistas de contactos">
           <button
             type="button"
-            className={`sidebar-nav-item${!selectedCategory ? " is-active" : ""}`}
-            onClick={() => onCategoryChange("")}
+            className={`sidebar-nav-item${activeView === "todos" ? " is-active" : ""}`}
+            onClick={() => onViewChange("todos")}
           >
             <span>
               <NavIcon name="contacts" />
@@ -60,14 +63,22 @@ export default function Sidebar({
             <span className="nav-count">{totalContacts}</span>
           </button>
 
-          <button type="button" className="sidebar-nav-item sidebar-static">
+          <button
+            type="button"
+            className={`sidebar-nav-item${activeView === "frecuentes" ? " is-active" : ""}`}
+            onClick={() => onViewChange("frecuentes")}
+          >
             <span>
               <NavIcon name="star" />
               Frecuentes
             </span>
           </button>
 
-          <button type="button" className="sidebar-nav-item sidebar-static">
+          <button
+            type="button"
+            className={`sidebar-nav-item${activeView === "otros" ? " is-active" : ""}`}
+            onClick={() => onViewChange("otros")}
+          >
             <span>
               <NavIcon name="users" />
               Otros contactos
@@ -78,13 +89,17 @@ export default function Sidebar({
         <div>
           <p className="sidebar-section-title">Administrar</p>
           <nav className="sidebar-nav" aria-label="Administracion">
-            <button type="button" className="sidebar-nav-item sidebar-static">
+            <button type="button" className="sidebar-nav-item" onClick={onOpenImport}>
               <span>
                 <NavIcon name="import" />
                 Importar
               </span>
             </button>
-            <button type="button" className="sidebar-nav-item sidebar-static">
+            <button
+              type="button"
+              className={`sidebar-nav-item${activeView === "papelera" ? " is-active" : ""}`}
+              onClick={() => onViewChange("papelera")}
+            >
               <span>
                 <NavIcon name="trash" />
                 Papelera
