@@ -1,0 +1,63 @@
+/* ================================
+   Landing Features
+================================ */
+
+.landing-features {
+    width: min(1120px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 70px 0 90px;
+}
+
+.landing-section-heading {
+    max-width: 720px;
+    margin-bottom: 34px;
+}
+
+.landing-section-kicker {
+    color: var(--color-primary);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.82rem;
+}
+
+.landing-section-heading h2 {
+    margin: 10px 0 0;
+    color: #0f172a;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.04em;
+}
+
+.landing-section-heading p {
+    margin: 16px 0 0;
+    color: var(--color-muted);
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.landing-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.landing-feature-card {
+    min-height: 210px;
+    padding: 24px;
+    border-radius: 22px;
+    background: #ffffff;
+    border: 1px solid #e5eaf4;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+}
+
+.landing-feature-card h3 {
+    margin: 0;
+    color: #0f172a;
+    font-size: 1.1rem;
+}
+
+.landing-feature-card p {
+    margin: 12px 0 0;
+    color: var(--color-muted);
+    line-height: 1.65;
+}

@@ -1,0 +1,15 @@
+/* ================================
+   Landing Footer
+================================ */
+
+.landing-footer {
+    padding: 28px 16px;
+    text-align: center;
+    color: #64748b;
+    background: #ffffff;
+    border-top: 1px solid #e5eaf4;
+}
+
+.landing-footer p {
+    margin: 4px 0;
+}
