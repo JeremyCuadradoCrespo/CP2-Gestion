@@ -1,0 +1,33 @@
+/* ---------- Toolbar ---------- */
+
+.contacts-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.category-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.category-filter label {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.category-filter select {
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.9rem;
+}
+
+.category-filter select:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 1px;
+}

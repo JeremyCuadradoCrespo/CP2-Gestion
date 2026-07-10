@@ -1,0 +1,35 @@
+/* ---------- Main content ---------- */
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 1.25rem 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.contacts-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.contacts-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.contacts-heading h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.contacts-count {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}

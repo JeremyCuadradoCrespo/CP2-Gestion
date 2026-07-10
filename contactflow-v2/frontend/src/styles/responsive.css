@@ -1,0 +1,93 @@
+/* ---------- Responsive ---------- */
+
+@media (min-width: 768px) {
+  .app-brand-name {
+    display: inline;
+  }
+
+  .contacts-table thead {
+    display: table-header-group;
+  }
+
+  .contact-row td[data-label] {
+    display: table-cell;
+    padding: 0.75rem 1rem;
+  }
+
+  .contact-row td[data-label]::before {
+    content: none;
+  }
+
+  .col-phone,
+  .col-category {
+    display: table-cell;
+  }
+
+  .main-content {
+    padding: 1.75rem 1.5rem 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sidebar {
+    display: flex;
+    position: static;
+    align-self: flex-start;
+    max-height: calc(100vh - var(--header-height));
+    box-shadow: none;
+    animation: none;
+  }
+
+  .hamburger-btn {
+    display: none;
+  }
+
+  .sidebar-backdrop {
+    display: none;
+  }
+
+  .alphabet-nav {
+    display: flex;
+  }
+
+  .contact-details-panel.is-open {
+    display: flex;
+  }
+
+  .main-content {
+    padding: 2rem 2rem 3rem;
+  }
+}
+
+@media (max-width: 1023.98px) {
+  .contact-details-panel {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    border-left: none;
+    z-index: 40;
+    padding-top: 1.5rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .col-phone {
+    display: none;
+  }
+
+  .modal-box {
+    padding: 1.25rem;
+  }
+
+  .form-field {
+    flex-basis: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+}
