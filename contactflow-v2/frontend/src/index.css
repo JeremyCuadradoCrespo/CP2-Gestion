@@ -211,6 +211,30 @@ a {
   min-width: 0;
 }
 
+.search-clear-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  color: var(--color-muted);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.search-clear-btn:hover,
+.search-clear-btn:focus-visible {
+  background-color: var(--color-hover);
+  color: var(--color-text);
+  outline: none;
+}
+
 .app-header-actions {
   display: flex;
   align-items: center;

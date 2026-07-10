@@ -29,7 +29,7 @@ export default function AppHeader({
         <SearchBar
           value={searchTerm}
           onChange={onSearchChange}
-          placeholder="Buscar por nombre, apellido, telefono o correo"
+          placeholder="Buscar contactos"
         />
       </div>
 
