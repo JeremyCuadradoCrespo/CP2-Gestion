@@ -29,14 +29,11 @@ export default function AppHeader({
         <SearchBar
           value={searchTerm}
           onChange={onSearchChange}
-          placeholder="Buscar por nombre, apellido, telefono o correo"
+          placeholder="Buscar contactos"
         />
       </div>
 
       <div className="app-header-actions">
-        <button type="button" className="icon-btn" aria-label="Ayuda">
-          <span aria-hidden="true">?</span>
-        </button>
         <button
           type="button"
           className="icon-btn"

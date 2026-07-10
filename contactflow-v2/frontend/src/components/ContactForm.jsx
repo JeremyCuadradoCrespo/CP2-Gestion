@@ -11,11 +11,14 @@ const ESTADO_INICIAL = {
   notas: ""
 };
 
+const LIMITE_NOTAS = 500;
+
 export default function ContactForm({ initialData, onSubmit, onCancel, mode, isSaving }) {
   const [valores, setValores] = useState(ESTADO_INICIAL);
   const [errores, setErrores] = useState({});
 
   const esEdicion = mode === "edit";
+  const caracteresNotas = valores.notas.length;
 
   useEffect(() => {
     if (initialData) {
@@ -36,30 +39,53 @@ export default function ContactForm({ initialData, onSubmit, onCancel, mode, isS
   function manejarCambio(evento) {
     const { name, value } = evento.target;
     setValores((previo) => ({ ...previo, [name]: value }));
+
+    if (errores[name]) {
+      setErrores((previo) => {
+        const siguientesErrores = { ...previo };
+        delete siguientesErrores[name];
+        return siguientesErrores;
+      });
+    }
   }
 
   function manejarEnvio(evento) {
     evento.preventDefault();
 
-    const { valido, errores: erroresValidacion } = validarFormularioContacto(valores);
+    const datosLimpios = {
+      nombre: valores.nombre.trim(),
+      apellido: valores.apellido.trim(),
+      telefono: valores.telefono.trim(),
+      correo: valores.correo.trim(),
+      categoria: valores.categoria.trim(),
+      notas: valores.notas.trim()
+    };
+
+    const { valido, errores: erroresValidacion } = validarFormularioContacto(datosLimpios);
     setErrores(erroresValidacion);
 
     if (!valido) {
       return;
     }
 
-    onSubmit(valores);
+    onSubmit(datosLimpios);
   }
 
   return (
     <form className="contact-form" onSubmit={manejarEnvio} noValidate>
+      <p className="form-helper">Completa los datos principales para agregarlo a tu agenda.</p>
+
       <div className="form-grid">
         <div className="form-field">
-          <label htmlFor="nombre">Nombre</label>
+          <label htmlFor="nombre">Nombre <span aria-hidden="true">*</span></label>
           <input
             id="nombre"
             name="nombre"
             type="text"
+            placeholder="Ej. Ana"
+            autoComplete="given-name"
+            autoFocus={!esEdicion}
+            required
             value={valores.nombre}
             onChange={manejarCambio}
             aria-invalid={Boolean(errores.nombre)}
@@ -69,11 +95,14 @@ export default function ContactForm({ initialData, onSubmit, onCancel, mode, isS
         </div>
 
         <div className="form-field">
-          <label htmlFor="apellido">Apellido</label>
+          <label htmlFor="apellido">Apellido <span aria-hidden="true">*</span></label>
           <input
             id="apellido"
             name="apellido"
             type="text"
+            placeholder="Ej. Perez"
+            autoComplete="family-name"
+            required
             value={valores.apellido}
             onChange={manejarCambio}
             aria-invalid={Boolean(errores.apellido)}
@@ -83,11 +112,15 @@ export default function ContactForm({ initialData, onSubmit, onCancel, mode, isS
         </div>
 
         <div className="form-field">
-          <label htmlFor="telefono">Telefono</label>
+          <label htmlFor="telefono">Telefono <span aria-hidden="true">*</span></label>
           <input
             id="telefono"
             name="telefono"
             type="tel"
+            placeholder="+593 99 123 4567"
+            autoComplete="tel"
+            inputMode="tel"
+            required
             value={valores.telefono}
             onChange={manejarCambio}
             aria-invalid={Boolean(errores.telefono)}
@@ -97,11 +130,15 @@ export default function ContactForm({ initialData, onSubmit, onCancel, mode, isS
         </div>
 
         <div className="form-field">
-          <label htmlFor="correo">Correo</label>
+          <label htmlFor="correo">Correo <span aria-hidden="true">*</span></label>
           <input
             id="correo"
             name="correo"
             type="email"
+            placeholder="ana.perez@ejemplo.com"
+            autoComplete="email"
+            inputMode="email"
+            required
             value={valores.correo}
             onChange={manejarCambio}
             aria-invalid={Boolean(errores.correo)}
@@ -111,10 +148,11 @@ export default function ContactForm({ initialData, onSubmit, onCancel, mode, isS
         </div>
 
         <div className="form-field">
-          <label htmlFor="categoria">Categoria</label>
+          <label htmlFor="categoria">Categoria <span aria-hidden="true">*</span></label>
           <select
             id="categoria"
             name="categoria"
+            required
             value={valores.categoria}
             onChange={manejarCambio}
             aria-invalid={Boolean(errores.categoria)}
@@ -129,11 +167,16 @@ export default function ContactForm({ initialData, onSubmit, onCancel, mode, isS
         </div>
 
         <div className="form-field form-field-wide">
-          <label htmlFor="notas">Notas</label>
+          <div className="form-label-row">
+            <label htmlFor="notas">Notas</label>
+            <span className="field-counter">{caracteresNotas}/{LIMITE_NOTAS}</span>
+          </div>
           <textarea
             id="notas"
             name="notas"
-            rows="3"
+            rows="4"
+            maxLength={LIMITE_NOTAS}
+            placeholder="Detalles importantes del contacto"
             value={valores.notas}
             onChange={manejarCambio}
             aria-invalid={Boolean(errores.notas)}
@@ -144,7 +187,7 @@ export default function ContactForm({ initialData, onSubmit, onCancel, mode, isS
       </div>
 
       <div className="form-actions">
-        <button type="button" className="btn btn-secondary" onClick={onCancel}>
+        <button type="button" className="btn btn-secondary" onClick={onCancel} disabled={isSaving}>
           Cancelar
         </button>
         <button type="submit" className="btn btn-primary" disabled={isSaving}>

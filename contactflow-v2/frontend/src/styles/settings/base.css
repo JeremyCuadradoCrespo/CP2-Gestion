@@ -1,0 +1,104 @@
+:root {
+  color-scheme: light;
+  --color-primary: #1a73e8;
+  --color-primary-strong: #1558b0;
+  --color-primary-soft: #d3e3fd;
+  --color-primary-on-soft: #0b57cf;
+  --color-bg: #f8fafd;
+  --color-surface: #ffffff;
+  --color-sidebar: #f5f7fb;
+  --color-text: #202124;
+  --color-muted: #5f6368;
+  --color-border: #dadce0;
+  --color-hover: #f1f3f4;
+  --color-danger: #d93025;
+  --color-danger-soft: #fce8e6;
+  --color-danger-soft-hover: #f6c6c1;
+  --color-success: #188038;
+  --sidebar-item-color: #344054;
+  --sidebar-icon-color: #667085;
+  --sidebar-section-color: #1558b0;
+  --sidebar-hover-bg: #e8f0fe;
+  --sidebar-hover-color: #0b57cf;
+  --sidebar-active-bg: #d3e3fd;
+  --sidebar-active-color: #0b57cf;
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --shadow-sm: 0 0.25rem 0.75rem rgba(60, 64, 67, 0.12);
+  --shadow-md: 0 0.75rem 1.5rem rgba(60, 64, 67, 0.16);
+  --font-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --header-height: 4rem;
+  --sidebar-width: 17rem;
+  --details-width: 22rem;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --color-primary: #8ab4f8;
+  --color-primary-strong: #aecbfa;
+  --color-primary-soft: #17345f;
+  --color-primary-on-soft: #d2e3fc;
+  --color-bg: #111418;
+  --color-surface: #1b1f24;
+  --color-sidebar: #171b20;
+  --color-text: #e8eaed;
+  --color-muted: #b6bdc6;
+  --color-border: #30363d;
+  --color-hover: #252b32;
+  --color-danger: #f28b82;
+  --color-danger-soft: #3f1d1c;
+  --color-danger-soft-hover: #5a2623;
+  --color-success: #81c995;
+  --sidebar-item-color: #f2f6ff;
+  --sidebar-icon-color: #9fb0c5;
+  --sidebar-section-color: #a9c7ff;
+  --sidebar-hover-bg: #223755;
+  --sidebar-hover-color: #ffffff;
+  --sidebar-active-bg: #1f4270;
+  --sidebar-active-color: #ffffff;
+  --shadow-sm: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-base);
+  line-height: 1.6;
+  font-size: 1rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
