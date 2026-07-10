@@ -1,13 +1,38 @@
 /* ---------- Report panel ---------- */
 
 .report-panel {
+  padding: 1rem;
+  background: color-mix(in srgb, var(--color-surface) 88%, var(--color-primary-soft));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.report-panel-heading {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-muted);
+  font-size: 0.8rem;
+}
+
+.report-panel-heading span:first-child {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.report-panel-cards {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(7.5rem, 1fr));
   gap: 0.75rem;
+  overflow-x: auto;
 }
 
 .report-card {
-  flex: 1 1 8rem;
+  --report-accent: var(--color-primary);
+  position: relative;
+  min-width: 7.5rem;
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -16,6 +41,17 @@
   flex-direction: column;
   gap: 0.25rem;
   transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.report-card::before {
+  content: "";
+  position: absolute;
+  top: 0.7rem;
+  bottom: 0.7rem;
+  left: 0;
+  width: 0.2rem;
+  border-radius: 0 1rem 1rem 0;
+  background: var(--report-accent);
 }
 
 .report-card:hover {
@@ -32,4 +68,22 @@
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--color-text);
+}
+
+.report-card--personal { --report-accent: #8e4de8; }
+.report-card--trabajo { --report-accent: var(--color-success); }
+.report-card--universidad { --report-accent: #7b3fc6; }
+.report-card--familia { --report-accent: #d93025; }
+.report-card--otro { --report-accent: #b06d00; }
+
+@media (max-width: 56rem) {
+  .report-panel-cards {
+    grid-template-columns: repeat(3, minmax(7.5rem, 1fr));
+  }
+}
+
+@media (max-width: 32rem) {
+  .report-panel-cards {
+    grid-template-columns: repeat(2, minmax(7.5rem, 1fr));
+  }
 }

@@ -8,22 +8,28 @@ export default function ReportPanel({ resumen, isLoading }) {
   }
 
   const tarjetas = [
-    { etiqueta: "Total", valor: resumen.total },
-    { etiqueta: "Personal", valor: resumen.personal },
-    { etiqueta: "Trabajo", valor: resumen.trabajo },
-    { etiqueta: "Universidad", valor: resumen.universidad },
-    { etiqueta: "Familia", valor: resumen.familia },
-    { etiqueta: "Otro", valor: resumen.otro }
+    { etiqueta: "Total", valor: resumen.total, estilo: "total" },
+    { etiqueta: "Personal", valor: resumen.personal, estilo: "personal" },
+    { etiqueta: "Trabajo", valor: resumen.trabajo, estilo: "trabajo" },
+    { etiqueta: "Universidad", valor: resumen.universidad, estilo: "universidad" },
+    { etiqueta: "Familia", valor: resumen.familia, estilo: "familia" },
+    { etiqueta: "Otro", valor: resumen.otro, estilo: "otro" }
   ];
 
   return (
-    <div className="report-panel">
-      {tarjetas.map((tarjeta) => (
-        <article className="report-card" key={tarjeta.etiqueta}>
-          <span className="report-card-label">{tarjeta.etiqueta}</span>
-          <span className="report-card-value">{tarjeta.valor}</span>
-        </article>
-      ))}
-    </div>
+    <section className="report-panel" aria-label="Resumen de contactos">
+      <div className="report-panel-heading">
+        <span>Resumen de contactos</span>
+        <span>{resumen.total} en total</span>
+      </div>
+      <div className="report-panel-cards">
+        {tarjetas.map((tarjeta) => (
+          <article className={`report-card report-card--${tarjeta.estilo}`} key={tarjeta.etiqueta}>
+            <span className="report-card-label">{tarjeta.etiqueta}</span>
+            <strong className="report-card-value">{tarjeta.valor}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
