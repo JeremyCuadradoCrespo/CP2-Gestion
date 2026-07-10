@@ -1,9 +1,8 @@
 /* Estilos globales */
 @import './styles/base/global.css';
-
-
-/* Estilos por componente */
-
+@import './styles/base/alerts.css';
+@import './styles/layout/navbar.css';
+@import './styles/layout/contact-page-layout.css';
 
 /* Estilos por página */
 @import './styles/pages/contact-form.css';
