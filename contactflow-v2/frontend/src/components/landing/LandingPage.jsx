@@ -11,7 +11,7 @@ import LandingFooter from "./LandingFooter.jsx";
 export default function LandingPage({ onEnterApp }) {
   return (
     <div className="landing-page">
-      <LandingHeader />
+      <LandingHeader onEnterApp={onEnterApp} />
       <main>
         <section className="landing-entry" aria-labelledby="landing-entry-title">
           <p className="landing-eyebrow">ContactFlow DevOps</p>
