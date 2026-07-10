@@ -1,0 +1,336 @@
+/* ================================
+   Contacts Page Layout
+================================ */
+
+.contacts-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top right, rgba(37, 99, 235, 0.12), transparent 26rem),
+    #f5f7fb;
+}
+
+.contacts-header {
+  padding: 24px 16px 50px;
+  background: linear-gradient(135deg, #1e40af 0%, #2563eb 52%, #60a5fa 100%);
+  color: #ffffff;
+}
+
+.contacts-nav {
+  width: min(1040px, 100%);
+  margin: 0 auto 42px;
+}
+
+.contacts-back-link {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 10px 16px;
+  border-radius: 999px;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  font-weight: 700;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.contacts-back-link:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.contacts-header-content {
+  width: min(1040px, 100%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contacts-badge {
+  display: inline-flex;
+  width: fit-content;
+  padding: 8px 14px;
+  margin-bottom: 16px;
+  border-radius: 999px;
+  color: #dbeafe;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  font-weight: 800;
+}
+
+.contacts-header h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  letter-spacing: -0.05em;
+}
+
+.contacts-subtitle {
+  margin: 14px auto 0;
+  max-width: 620px;
+  color: #dbeafe;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.contacts-main {
+  width: min(1040px, calc(100% - 32px));
+  margin: -28px auto 0;
+  padding-bottom: 70px;
+  display: grid;
+  gap: 22px;
+}
+
+/* ================================
+   Contacts Alerts
+================================ */
+
+.contacts-alert {
+  margin: 0;
+  padding: 14px 18px;
+  border-radius: 16px;
+  font-weight: 700;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+}
+
+.contacts-alert-exito {
+  color: var(--color-success);
+  background: var(--color-success-soft);
+  border: 1px solid rgba(21, 128, 61, 0.22);
+}
+
+.contacts-alert-error {
+  color: var(--color-error);
+  background: var(--color-error-soft);
+  border: 1px solid rgba(185, 28, 28, 0.22);
+}
+
+/* ================================
+   Contacts Panels
+================================ */
+
+.contacts-panel {
+  padding: 28px;
+  border-radius: var(--radius-lg);
+  background: #ffffff;
+  border: 1px solid #e5eaf4;
+  box-shadow: var(--shadow-soft);
+}
+
+.contacts-panel-heading {
+  margin-bottom: 22px;
+}
+
+.contacts-panel-heading h2 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1.45rem;
+  letter-spacing: -0.02em;
+}
+
+.contacts-panel-heading p {
+  margin: 8px 0 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+/* ================================
+   Contact Form
+   Componente: ContactForm.jsx
+================================ */
+
+.contact-form {
+  display: grid;
+  gap: 22px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.form-field {
+  display: grid;
+  gap: 8px;
+}
+
+.form-field label {
+  color: #334155;
+  font-weight: 800;
+  font-size: 0.94rem;
+}
+
+.form-field input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-field input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.form-field input[aria-invalid="true"] {
+  border-color: var(--color-error);
+  background: #fff7f7;
+}
+
+.form-field input[aria-invalid="true"]:focus {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 4px rgba(185, 28, 28, 0.12);
+}
+
+.field-error {
+  color: var(--color-error);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn {
+  min-height: 46px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 14px;
+  font-weight: 800;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary {
+  color: #ffffff;
+  background: var(--color-primary);
+  box-shadow: 0 12px 26px rgba(37, 99, 235, 0.24);
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: var(--color-primary-dark);
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ================================
+   Contact List
+   Usa estas clases en ContactList.jsx
+================================ */
+
+.contact-list {
+  display: grid;
+  gap: 14px;
+}
+
+.contact-list-empty,
+.contact-list-loading {
+  margin: 0;
+  padding: 20px;
+  border-radius: 16px;
+  color: var(--color-muted);
+  background: #f8fafc;
+  border: 1px dashed var(--color-border);
+  text-align: center;
+}
+
+.contact-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: center;
+  padding: 18px;
+  border-radius: 18px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.contact-card-info {
+  min-width: 0;
+}
+
+.contact-card-name {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1.05rem;
+  font-weight: 900;
+}
+
+.contact-card-details {
+  margin: 8px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  color: var(--color-muted);
+  font-size: 0.94rem;
+}
+
+.contact-delete-button {
+  min-height: 40px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 12px;
+  color: #ffffff;
+  background: #dc2626;
+  font-weight: 800;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.contact-delete-button:hover {
+  transform: translateY(-2px);
+  background: #b91c1c;
+}
+
+/* ================================
+   Contacts Footer
+================================ */
+
+.contacts-footer {
+  padding: 28px 16px;
+  color: #64748b;
+  text-align: center;
+  background: #ffffff;
+  border-top: 1px solid #e5eaf4;
+}
+
+.contacts-footer p {
+  margin: 0;
+}
+
+/* ================================
+   Contacts Responsive
+================================ */
+
+@media (max-width: 720px) {
+  .contacts-panel {
+    padding: 22px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    justify-content: stretch;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .contact-card {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-delete-button {
+    width: 100%;
+  }
+}
