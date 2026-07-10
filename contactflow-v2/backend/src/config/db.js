@@ -5,16 +5,15 @@ dotenv.config();
 
 const { Pool } = pg;
 
-if (!process.env.DATABASE_URL) {
-  console.error("[db] Falta la variable de entorno DATABASE_URL. Revisa tu archivo .env");
-}
+const isProduction = process.env.NODE_ENV === "production";
 
 export const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
-});
-
-pool.on("error", (err) => {
-  console.error("[db] Error inesperado en el cliente de PostgreSQL:", err.message);
+  connectionString: process.env.DATABASE_URL,
+  ssl: isProduction
+    ? {
+        rejectUnauthorized: false
+      }
+    : false
 });
 
 export async function query(text, params) {
