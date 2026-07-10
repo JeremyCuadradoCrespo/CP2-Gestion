@@ -1,0 +1,31 @@
+.contact-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 18px;
+    border-radius: 18px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+.contact-card-info {
+    min-width: 0;
+}
+
+.contact-card-name {
+    margin: 0;
+    color: #0f172a;
+    font-size: 1.05rem;
+    font-weight: 900;
+}
+
+.contact-card-details {
+    margin: 8px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    color: var(--color-muted);
+    font-size: 0.94rem;
+}
+
