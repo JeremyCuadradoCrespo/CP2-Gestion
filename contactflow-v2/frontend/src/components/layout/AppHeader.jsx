@@ -5,7 +5,8 @@ export default function AppHeader({
   onSearchChange,
   onToggleSidebar,
   theme,
-  onToggleTheme
+  onToggleTheme,
+  onBackToLanding
 }) {
   const isDarkMode = theme === "dark";
 
@@ -34,6 +35,15 @@ export default function AppHeader({
       </div>
 
       <div className="app-header-actions">
+        {onBackToLanding ? (
+          <button
+            type="button"
+            className="btn btn-secondary app-header-return"
+            onClick={onBackToLanding}
+          >
+            Volver a presentacion
+          </button>
+        ) : null}
         <button
           type="button"
           className="icon-btn"

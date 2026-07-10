@@ -1,0 +1,52 @@
+.landing-navbar {
+    width: min(1120px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 24px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.landing-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    color: #111827;
+}
+
+.landing-brand-mark {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: var(--color-primary);
+    color: #ffffff;
+    box-shadow: 0 12px 28px rgba(37, 99, 235, 0.28);
+}
+
+.landing-brand-name {
+    font-size: 1.05rem;
+}
+
+.landing-nav-link {
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: #ffffff;
+    color: var(--color-primary);
+    font-weight: 700;
+    border: 1px solid rgba(37, 99, 235, 0.16);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.landing-nav-link:hover {
+    transform: translateY(-2px);
+    border-color: rgba(37, 99, 235, 0.45);
+}
+
+.contacts-nav {
+    width: min(1040px, 100%);
+    margin: 0 auto 42px;
+}

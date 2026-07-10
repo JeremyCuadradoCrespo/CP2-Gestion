@@ -1,0 +1,55 @@
+@import '../components/landing/landing-features.css';
+@import '../components/landing/landing-footer.css';
+@import '../components/landing/landing-hero.css';
+@import '../components/landing/landing-visual-card.css';
+
+/* ================================
+   Landing Page
+================================ */
+
+.landing-page {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.15), transparent 32rem),
+        linear-gradient(180deg, #eef4ff 0%, #f8fafc 48%, #ffffff 100%);
+}
+
+/* ================================
+   Landing Responsive
+================================ */
+
+@media (max-width: 900px) {
+    .landing-hero-content {
+        grid-template-columns: 1fr;
+        padding-top: 48px;
+    }
+
+    .landing-feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 620px) {
+    .landing-navbar {
+        align-items: flex-start;
+        gap: 16px;
+        flex-direction: column;
+    }
+
+    .landing-actions {
+        flex-direction: column;
+    }
+
+    .landing-primary-button,
+    .landing-secondary-button {
+        width: 100%;
+    }
+
+    .landing-feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .landing-card-body {
+        padding: 22px;
+    }
+}

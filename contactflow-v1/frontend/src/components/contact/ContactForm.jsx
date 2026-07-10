@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { validarFormularioContacto } from "../utils/formValidator.js";
+import { validarFormularioContacto } from "../../utils/formValidator.js";
 
 const ESTADO_INICIAL = {
   nombre: "",

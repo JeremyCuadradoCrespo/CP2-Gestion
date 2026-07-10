@@ -8,6 +8,7 @@
 @import "./styles/features/contacts/table.css";
 @import "./styles/features/contacts/alphabet-nav.css";
 @import "./styles/features/contacts/details-panel.css";
+@import "./styles/features/landing/landing.css";
 @import "./styles/components/buttons.css";
 @import "./styles/components/modal.css";
 @import "./styles/components/forms.css";

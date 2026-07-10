@@ -1,0 +1,32 @@
+@import '../components/contact/contact-card.css';
+@import '../components/contact/contact-footer.css';
+@import '../components/contact/contact-form.css';
+@import '../components/contact/contact-list.css';
+@import '../components/contact/contact-panels.css';
+
+
+@media (max-width: 720px) {
+  .contacts-panel {
+    padding: 22px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    justify-content: stretch;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .contact-card {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-delete-button {
+    width: 100%;
+  }
+}

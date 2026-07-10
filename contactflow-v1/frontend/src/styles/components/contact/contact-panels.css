@@ -1,0 +1,29 @@
+/* ================================
+   Contacts Panels
+================================ */
+
+.contacts-panel {
+  padding: 28px;
+  border-radius: var(--radius-lg);
+  background: #ffffff;
+  border: 1px solid #e5eaf4;
+  box-shadow: var(--shadow-soft);
+}
+
+.contacts-panel-heading {
+  margin-bottom: 22px;
+}
+
+.contacts-panel-heading h2 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1.45rem;
+  letter-spacing: -0.02em;
+}
+
+.contacts-panel-heading p {
+  margin: 8px 0 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+

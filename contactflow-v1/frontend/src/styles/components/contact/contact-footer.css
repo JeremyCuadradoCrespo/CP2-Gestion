@@ -1,0 +1,16 @@
+/* ================================
+   Contacts Footer
+================================ */
+
+.contacts-footer {
+  padding: 28px 16px;
+  color: #64748b;
+  text-align: center;
+  background: #ffffff;
+  border-top: 1px solid #e5eaf4;
+}
+
+.contacts-footer p {
+  margin: 0;
+}
+

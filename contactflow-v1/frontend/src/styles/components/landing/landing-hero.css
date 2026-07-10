@@ -1,0 +1,86 @@
+/* ================================
+   Landing Hero
+================================ */
+
+.landing-hero {
+    min-height: 680px;
+}
+
+.landing-hero-content {
+    width: min(1120px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 80px 0 100px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: 48px;
+}
+
+.landing-hero-text {
+    max-width: 640px;
+}
+
+.landing-badge {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    border-radius: 999px;
+    background: var(--color-primary-soft);
+    color: var(--color-primary-dark);
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.landing-title {
+    margin: 0;
+    color: #0f172a;
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    line-height: 1.02;
+    letter-spacing: -0.06em;
+}
+
+.landing-description {
+    margin: 24px 0 0;
+    max-width: 580px;
+    color: var(--color-muted);
+    font-size: 1.12rem;
+    line-height: 1.8;
+}
+
+.landing-actions {
+    margin-top: 34px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.landing-primary-button,
+.landing-secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 22px;
+    border-radius: 14px;
+    font-weight: 800;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.landing-primary-button {
+    background: var(--color-primary);
+    color: #ffffff;
+    box-shadow: 0 14px 30px rgba(37, 99, 235, 0.28);
+}
+
+.landing-secondary-button {
+    background: #ffffff;
+    color: #1f2937;
+    border: 1px solid var(--color-border);
+}
+
+.landing-primary-button:hover,
+.landing-secondary-button:hover {
+    transform: translateY(-2px);
+}
