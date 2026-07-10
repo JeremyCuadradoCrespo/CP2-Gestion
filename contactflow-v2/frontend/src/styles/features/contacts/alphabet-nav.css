@@ -2,34 +2,36 @@
 
 .alphabet-nav {
   display: none;
-  flex-direction: column;
+  align-self: flex-end;
+  flex-direction: row;
   align-items: center;
-  gap: 0.1rem;
-  padding: 0.5rem 0.25rem;
-  position: sticky;
-  top: calc(var(--header-height) + 1rem);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.3rem;
+  max-width: 100%;
+  padding: 0.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
 }
 
 .alphabet-nav button {
-  width: 1.4rem;
-  height: 1.2rem;
-  border: none;
-  background: transparent;
+  width: 1.65rem;
+  height: 1.65rem;
+  border: 1px solid transparent;
+  background-color: transparent;
   color: var(--color-muted);
-  font-size: 0.68rem;
+  font-size: 0.72rem;
+  font-weight: 700;
   cursor: pointer;
   border-radius: var(--radius-sm);
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
 .alphabet-nav button:hover,
 .alphabet-nav button:focus-visible {
+  border-color: var(--color-primary);
   background-color: var(--color-primary-soft);
   color: var(--color-primary-on-soft);
   outline: none;
-}
-
-.alphabet-nav button.is-disabled {
-  color: var(--color-border);
-  cursor: default;
 }

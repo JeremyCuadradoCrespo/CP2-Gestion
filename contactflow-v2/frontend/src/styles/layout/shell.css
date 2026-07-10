@@ -8,7 +8,7 @@
 
 .app-body {
   display: flex;
-  flex: 1;
-  min-height: calc(100vh - var(--header-height));
+  flex: 0 0 auto;
+  min-height: 0;
   position: relative;
 }

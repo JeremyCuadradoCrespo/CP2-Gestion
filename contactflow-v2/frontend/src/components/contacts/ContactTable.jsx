@@ -7,7 +7,7 @@ const ALFABETO = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 const CONTACTOS_POR_PAGINA = 8;
 
 export default function ContactTable({
-  contacts,
+  contacts = [],
   isLoading,
   onEdit,
   onDelete,
@@ -24,6 +24,11 @@ export default function ContactTable({
     );
     return letras;
   }, [contacts]);
+
+  const letrasNavegacion = useMemo(
+    () => ALFABETO.filter((letra) => letrasDisponibles.has(letra)),
+    [letrasDisponibles]
+  );
 
   const totalPaginas = Math.max(1, Math.ceil((contacts?.length || 0) / CONTACTOS_POR_PAGINA));
   const paginaSegura = Math.min(paginaActual, totalPaginas);
@@ -180,20 +185,20 @@ export default function ContactTable({
         )}
       </div>
 
-      <nav className="alphabet-nav" aria-label="Navegacion alfabetica de contactos">
-        {ALFABETO.map((letra) => (
-          <button
-            key={letra}
-            type="button"
-            className={letrasDisponibles.has(letra) ? "" : "is-disabled"}
-            disabled={!letrasDisponibles.has(letra)}
-            onClick={() => irALetra(letra)}
-            aria-label={`Ir a contactos que empiezan con ${letra}`}
-          >
-            {letra}
-          </button>
-        ))}
-      </nav>
+      {letrasNavegacion.length > 0 && (
+        <nav className="alphabet-nav" aria-label="Navegacion alfabetica de contactos">
+          {letrasNavegacion.map((letra) => (
+            <button
+              key={letra}
+              type="button"
+              onClick={() => irALetra(letra)}
+              aria-label={`Ir a contactos que empiezan con ${letra}`}
+            >
+              {letra}
+            </button>
+          ))}
+        </nav>
+      )}
     </div>
   );
 }
