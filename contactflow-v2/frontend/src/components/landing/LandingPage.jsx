@@ -11,8 +11,11 @@ import LandingFooter from "./LandingFooter.jsx";
 export default function LandingPage({ onEnterApp }) {
   return (
     <div className="landing-page">
+      <a className="landing-skip-link" href="#contenido-landing">
+        Saltar al contenido
+      </a>
       <LandingHeader onEnterApp={onEnterApp} />
-      <main>
+      <main id="contenido-landing">
         <HeroSection onEnterApp={onEnterApp} />
         <ProblemSolutionSection />
         <FeatureSection />

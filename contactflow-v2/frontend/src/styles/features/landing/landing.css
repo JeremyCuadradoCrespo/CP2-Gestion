@@ -8,6 +8,26 @@
   color: var(--color-text);
 }
 
+.landing-skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 80;
+  transform: translateY(-150%);
+  border-radius: var(--radius-sm);
+  background-color: var(--landing-ink);
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.landing-skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 3px solid var(--landing-warm);
+  outline-offset: 3px;
+}
+
 .landing-header {
   position: sticky;
   top: 0;
@@ -20,6 +40,7 @@
   background-color: color-mix(in srgb, var(--color-surface) 94%, transparent);
   border-bottom: 1px solid var(--color-border);
   box-shadow: 0 0.25rem 1rem rgba(23, 32, 51, 0.06);
+  backdrop-filter: blur(16px);
 }
 
 .landing-brand {
@@ -55,6 +76,11 @@
   font-size: 0.95rem;
   font-weight: 650;
   text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.landing-nav a:hover {
+  color: var(--color-primary);
 }
 
 .landing-header-action,
@@ -71,6 +97,12 @@
   font-weight: 750;
   text-decoration: none;
   cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
 .landing-header-action,
@@ -85,6 +117,29 @@
   color: var(--color-text);
 }
 
+.landing-header-action:hover,
+.landing-primary-action:hover {
+  background-color: var(--color-primary-strong);
+  transform: translateY(-1px);
+  box-shadow: 0 0.75rem 1.25rem rgba(26, 115, 232, 0.2);
+}
+
+.landing-secondary-action:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary-strong);
+  transform: translateY(-1px);
+}
+
+.landing-brand:focus-visible,
+.landing-nav a:focus-visible,
+.landing-header-action:focus-visible,
+.landing-primary-action:focus-visible,
+.landing-secondary-action:focus-visible,
+.app-header-return:focus-visible {
+  outline: 3px solid var(--landing-warm);
+  outline-offset: 3px;
+}
+
 .landing-section,
 .landing-footer {
   width: min(100% - 2rem, 72rem);
@@ -93,6 +148,7 @@
 
 .landing-section {
   padding: 4rem 0;
+  animation: fadeInUp 0.55s ease both;
 }
 
 .hero-section {
@@ -183,6 +239,13 @@
 
 .hero-panel span {
   padding: 0.65rem 0.85rem;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.hero-panel span:hover {
+  transform: translateX(0.25rem);
+  background-color: var(--landing-warm-soft);
+  color: var(--landing-warm);
 }
 
 .section-heading {
@@ -213,6 +276,20 @@
   border-radius: var(--radius-md);
   background-color: var(--color-surface);
   box-shadow: var(--shadow-sm);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.landing-card:hover,
+.feature-card:hover,
+.architecture-step:hover,
+.devops-item:hover,
+.metric-card:hover {
+  border-color: color-mix(in srgb, var(--landing-accent) 42%, var(--color-border));
+  box-shadow: var(--shadow-md);
+  transform: translateY(-0.2rem);
 }
 
 .landing-card,
