@@ -1,4 +1,4 @@
-import { CATEGORIAS } from "../data/categories.js";
+import { CATEGORIAS } from "../../data/categories.js";
 
 export default function CategoryFilter({ value, onChange }) {
   return (

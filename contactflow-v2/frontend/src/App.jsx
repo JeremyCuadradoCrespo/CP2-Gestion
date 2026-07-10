@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
-import AppHeader from "./components/AppHeader.jsx";
-import Sidebar from "./components/Sidebar.jsx";
-import ContactModal from "./components/ContactModal.jsx";
-import ContactTable from "./components/ContactTable.jsx";
-import ContactDetailsPanel from "./components/ContactDetailsPanel.jsx";
-import ReportPanel from "./components/ReportPanel.jsx";
-import CategoryFilter from "./components/CategoryFilter.jsx";
-import StatusMessage from "./components/StatusMessage.jsx";
+import AppHeader from "./components/layout/AppHeader.jsx";
+import Sidebar from "./components/layout/Sidebar.jsx";
+import ContactModal from "./components/contacts/ContactModal.jsx";
+import ContactTable from "./components/contacts/ContactTable.jsx";
+import ContactDetailsPanel from "./components/contacts/ContactDetailsPanel.jsx";
+import ReportPanel from "./components/contacts/ReportPanel.jsx";
+import CategoryFilter from "./components/filters/CategoryFilter.jsx";
+import StatusMessage from "./components/feedback/StatusMessage.jsx";
 import {
   getContacts,
   createContact,

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { validarFormularioContacto } from "../utils/formValidator.js";
-import { CATEGORIAS } from "../data/categories.js";
+import { validarFormularioContacto } from "../../utils/formValidator.js";
+import { CATEGORIAS } from "../../data/categories.js";
 
 const ESTADO_INICIAL = {
   nombre: "",

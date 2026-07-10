@@ -1,4 +1,4 @@
-import { obtenerIniciales, obtenerColorAvatar } from "../utils/initials.js";
+import { obtenerIniciales, obtenerColorAvatar } from "../../utils/initials.js";
 
 export default function ContactRow({ contacto, isSelected, onEdit, onDelete, onSelect, rowRef }) {
   const iniciales = obtenerIniciales(contacto.nombre, contacto.apellido);

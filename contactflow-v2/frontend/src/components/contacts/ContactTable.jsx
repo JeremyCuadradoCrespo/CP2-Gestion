@@ -1,7 +1,7 @@
 import { useMemo, useRef } from "react";
 import ContactRow from "./ContactRow.jsx";
-import LoadingState from "./LoadingState.jsx";
-import EmptyState from "./EmptyState.jsx";
+import LoadingState from "../feedback/LoadingState.jsx";
+import EmptyState from "../feedback/EmptyState.jsx";
 
 const ALFABETO = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
