@@ -19,7 +19,7 @@ export default function LandingPage({ onEnterApp }) {
         <ArchitectureSection />
         <DevOpsSection />
         <LandingMetrics />
-        <LandingCTA />
+        <LandingCTA onEnterApp={onEnterApp} />
       </main>
       <LandingFooter />
     </div>
