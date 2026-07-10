@@ -15,6 +15,12 @@
   --color-danger-soft: #fce8e6;
   --color-danger-soft-hover: #f6c6c1;
   --color-success: #188038;
+  --landing-accent: #0f766e;
+  --landing-accent-soft: #ccfbf1;
+  --landing-warm: #b45309;
+  --landing-warm-soft: #fef3c7;
+  --landing-ink: #172033;
+  --landing-hero-bg: #eef6ff;
   --sidebar-item-color: #344054;
   --sidebar-icon-color: #667085;
   --sidebar-section-color: #1558b0;
@@ -50,6 +56,12 @@
   --color-danger-soft: #3f1d1c;
   --color-danger-soft-hover: #5a2623;
   --color-success: #81c995;
+  --landing-accent: #5eead4;
+  --landing-accent-soft: #123f3b;
+  --landing-warm: #facc15;
+  --landing-warm-soft: #422d08;
+  --landing-ink: #f7fbff;
+  --landing-hero-bg: #151c25;
   --sidebar-item-color: #f2f6ff;
   --sidebar-icon-color: #9fb0c5;
   --sidebar-section-color: #a9c7ff;
