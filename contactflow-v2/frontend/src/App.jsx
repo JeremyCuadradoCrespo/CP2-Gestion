@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import AppFooter from "./components/layout/AppFooter.jsx";
 import AppHeader from "./components/layout/AppHeader.jsx";
 import Sidebar from "./components/layout/Sidebar.jsx";
 import ContactModal from "./components/contacts/ContactModal.jsx";
@@ -236,9 +237,7 @@ export default function App() {
         isSaving={isSaving}
       />
 
-      <footer className="app-footer">
-        <p>Proyecto academico - ContactFlow V2, agenda de contactos avanzada con arquitectura full stack.</p>
-      </footer>
+      <AppFooter />
     </div>
   );
 }
