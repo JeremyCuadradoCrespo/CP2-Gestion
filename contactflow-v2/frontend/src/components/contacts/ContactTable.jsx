@@ -1,9 +1,10 @@
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ContactRow from "./ContactRow.jsx";
 import LoadingState from "../feedback/LoadingState.jsx";
 import EmptyState from "../feedback/EmptyState.jsx";
 
 const ALFABETO = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const CONTACTOS_POR_PAGINA = 8;
 
 export default function ContactTable({
   contacts,
@@ -14,6 +15,8 @@ export default function ContactTable({
   selectedContactId
 }) {
   const filasRef = useRef(new Map());
+  const contactoPendienteRef = useRef(null);
+  const [paginaActual, setPaginaActual] = useState(1);
 
   const letrasDisponibles = useMemo(() => {
     const letras = new Set(
@@ -21,6 +24,46 @@ export default function ContactTable({
     );
     return letras;
   }, [contacts]);
+
+  const totalPaginas = Math.max(1, Math.ceil((contacts?.length || 0) / CONTACTOS_POR_PAGINA));
+  const paginaSegura = Math.min(paginaActual, totalPaginas);
+  const indiceInicio = (paginaSegura - 1) * CONTACTOS_POR_PAGINA;
+  const indiceFin = indiceInicio + CONTACTOS_POR_PAGINA;
+  const contactosPaginados = useMemo(
+    () => contacts.slice(indiceInicio, indiceFin),
+    [contacts, indiceInicio, indiceFin]
+  );
+  const primerContactoVisible = indiceInicio + 1;
+  const ultimoContactoVisible = Math.min(indiceFin, contacts.length);
+
+  const paginasVisibles = useMemo(() => {
+    const inicio = Math.max(1, paginaSegura - 2);
+    const fin = Math.min(totalPaginas, inicio + 4);
+    const inicioAjustado = Math.max(1, fin - 4);
+
+    return Array.from({ length: fin - inicioAjustado + 1 }, (_, indice) => inicioAjustado + indice);
+  }, [paginaSegura, totalPaginas]);
+
+  useEffect(() => {
+    if (paginaActual > totalPaginas) {
+      setPaginaActual(totalPaginas);
+    }
+  }, [paginaActual, totalPaginas]);
+
+  useEffect(() => {
+    const contactoId = contactoPendienteRef.current;
+
+    if (!contactoId) {
+      return;
+    }
+
+    const nodo = filasRef.current.get(contactoId);
+
+    if (nodo) {
+      nodo.scrollIntoView({ block: "center" });
+      contactoPendienteRef.current = null;
+    }
+  }, [contactosPaginados]);
 
   function registrarFila(id, nodo) {
     if (nodo) {
@@ -39,10 +82,16 @@ export default function ContactTable({
       return;
     }
 
+    const indiceContacto = contacts.findIndex((contacto) => contacto.id === contactoEncontrado.id);
+    const paginaDestino = Math.floor(indiceContacto / CONTACTOS_POR_PAGINA) + 1;
     const nodo = filasRef.current.get(contactoEncontrado.id);
+
+    contactoPendienteRef.current = contactoEncontrado.id;
+    setPaginaActual(paginaDestino);
 
     if (nodo) {
       nodo.scrollIntoView({ block: "center" });
+      contactoPendienteRef.current = null;
     }
   }
 
@@ -73,7 +122,7 @@ export default function ContactTable({
             </tr>
           </thead>
           <tbody>
-            {contacts.map((contacto) => (
+            {contactosPaginados.map((contacto) => (
               <ContactRow
                 key={contacto.id}
                 contacto={contacto}
@@ -86,6 +135,49 @@ export default function ContactTable({
             ))}
           </tbody>
         </table>
+
+        {totalPaginas > 1 && (
+          <div className="contacts-pagination" aria-label="Paginacion de contactos">
+            <p className="pagination-summary">
+              Mostrando {primerContactoVisible}-{ultimoContactoVisible} de {contacts.length}
+            </p>
+
+            <div className="pagination-controls">
+              <button
+                type="button"
+                className="pagination-btn"
+                onClick={() => setPaginaActual((pagina) => Math.max(1, pagina - 1))}
+                disabled={paginaSegura === 1}
+                aria-label="Ir a la pagina anterior"
+              >
+                &lsaquo;
+              </button>
+
+              {paginasVisibles.map((pagina) => (
+                <button
+                  key={pagina}
+                  type="button"
+                  className={`pagination-btn${pagina === paginaSegura ? " is-active" : ""}`}
+                  onClick={() => setPaginaActual(pagina)}
+                  aria-label={`Ir a la pagina ${pagina}`}
+                  aria-current={pagina === paginaSegura ? "page" : undefined}
+                >
+                  {pagina}
+                </button>
+              ))}
+
+              <button
+                type="button"
+                className="pagination-btn"
+                onClick={() => setPaginaActual((pagina) => Math.min(totalPaginas, pagina + 1))}
+                disabled={paginaSegura === totalPaginas}
+                aria-label="Ir a la pagina siguiente"
+              >
+                &rsaquo;
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       <nav className="alphabet-nav" aria-label="Navegacion alfabetica de contactos">

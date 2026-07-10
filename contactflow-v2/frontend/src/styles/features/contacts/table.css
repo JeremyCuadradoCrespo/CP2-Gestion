@@ -198,3 +198,63 @@
 .contact-row td.actions-cell {
   text-align: right;
 }
+
+.contacts-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-top: 1px solid var(--color-border);
+  background-color: color-mix(in srgb, var(--color-surface) 92%, var(--color-hover));
+}
+
+.pagination-summary {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.86rem;
+  white-space: nowrap;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.pagination-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.pagination-btn:hover:not(:disabled),
+.pagination-btn:focus-visible {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary-on-soft);
+  outline: none;
+}
+
+.pagination-btn.is-active {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.pagination-btn:disabled {
+  color: var(--color-border);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
