@@ -67,6 +67,7 @@
   border-radius: var(--radius-sm);
   border: 1px solid transparent;
   padding: 0.75rem 1rem;
+  text-align: center;
   font-weight: 750;
   text-decoration: none;
   cursor: pointer;
@@ -317,5 +318,150 @@
 }
 
 .app-header-return {
-  display: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 7rem;
+  padding: 0.55rem 0.65rem;
+  line-height: 1.1;
+  white-space: normal;
+}
+
+@media (min-width: 520px) {
+  .hero-actions {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .app-header-return {
+    max-width: none;
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 768px) {
+  .landing-header {
+    padding: 0.9rem 1.5rem;
+  }
+
+  .landing-nav {
+    display: flex;
+  }
+
+  .landing-section,
+  .landing-footer {
+    width: min(100% - 3rem, 72rem);
+  }
+
+  .hero-section {
+    min-height: calc(100vh - 4.5rem);
+  }
+
+  .problem-solution-grid,
+  .devops-grid,
+  .metrics-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .problem-solution-grid > *,
+  .devops-grid > * {
+    flex: 1 1 18rem;
+  }
+
+  .feature-grid {
+    flex-flow: row wrap;
+  }
+
+  .feature-card {
+    flex: 1 1 calc(50% - 1rem);
+  }
+
+  .metric-card {
+    flex: 1 1 13rem;
+  }
+
+  .landing-cta {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .landing-cta .landing-primary-action {
+    flex-shrink: 0;
+  }
+
+  .landing-footer {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .landing-footer > * {
+    flex: 1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .landing-header {
+    padding-inline: max(2rem, calc((100vw - 72rem) / 2));
+  }
+
+  .hero-section {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .hero-copy,
+  .hero-panel {
+    flex: 1;
+  }
+
+  .hero-panel {
+    max-width: 25rem;
+  }
+
+  .feature-card {
+    flex-basis: calc(25% - 1rem);
+  }
+
+  .architecture-flow {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .architecture-step {
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .architecture-connector {
+    top: 50%;
+    right: -0.7rem;
+    bottom: auto;
+    left: auto;
+    transform: rotate(-90deg);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .landing-header {
+    gap: 0.6rem;
+  }
+
+  .landing-brand {
+    min-width: 0;
+  }
+
+  .landing-brand span:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .landing-header-action {
+    min-height: 2.5rem;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.85rem;
+  }
 }
