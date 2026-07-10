@@ -104,13 +104,89 @@
 }
 
 .category-badge {
-  display: inline-block;
-  padding: 0.2rem 0.7rem;
-  border-radius: 999px;
-  background-color: var(--color-hover);
-  color: var(--color-text);
-  font-size: 0.78rem;
-  font-weight: 600;
+  --category-accent: var(--color-primary);
+  --category-bg: var(--color-hover);
+  --category-text: var(--color-text);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 6.35rem;
+  max-width: 100%;
+  padding: 0.32rem 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--category-accent) 34%, transparent);
+  border-radius: var(--radius-sm);
+  background-color: color-mix(in srgb, var(--category-bg) 86%, transparent);
+  color: var(--category-text);
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.category-badge::before {
+  content: "";
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 50%;
+  background-color: var(--category-accent);
+  box-shadow: 0 0 0 0.18rem color-mix(in srgb, var(--category-accent) 18%, transparent);
+  flex: 0 0 auto;
+}
+
+.category-badge-personal {
+  --category-accent: #1a73e8;
+  --category-bg: #e8f0fe;
+  --category-text: #174ea6;
+}
+
+.category-badge-trabajo {
+  --category-accent: #188038;
+  --category-bg: #e6f4ea;
+  --category-text: #137333;
+}
+
+.category-badge-universidad {
+  --category-accent: #9334e6;
+  --category-bg: #f3e8fd;
+  --category-text: #7627bb;
+}
+
+.category-badge-familia {
+  --category-accent: #d93025;
+  --category-bg: #fce8e6;
+  --category-text: #a50e0e;
+}
+
+.category-badge-otro {
+  --category-accent: #5f6368;
+  --category-bg: #f1f3f4;
+  --category-text: #3c4043;
+}
+
+[data-theme="dark"] .category-badge-personal {
+  --category-bg: #17345f;
+  --category-text: #d2e3fc;
+}
+
+[data-theme="dark"] .category-badge-trabajo {
+  --category-bg: #12351f;
+  --category-text: #ceead6;
+}
+
+[data-theme="dark"] .category-badge-universidad {
+  --category-bg: #351c4f;
+  --category-text: #e9d2fd;
+}
+
+[data-theme="dark"] .category-badge-familia {
+  --category-bg: #3f1d1c;
+  --category-text: #fce8e6;
+}
+
+[data-theme="dark"] .category-badge-otro {
+  --category-bg: #252b32;
+  --category-text: #e8eaed;
 }
 
 .contact-actions {

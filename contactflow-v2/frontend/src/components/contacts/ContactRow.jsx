@@ -1,8 +1,17 @@
 import { obtenerIniciales, obtenerColorAvatar } from "../../utils/initials.js";
 
+const categoriaClases = {
+  Personal: "category-badge-personal",
+  Trabajo: "category-badge-trabajo",
+  Universidad: "category-badge-universidad",
+  Familia: "category-badge-familia",
+  Otro: "category-badge-otro"
+};
+
 export default function ContactRow({ contacto, isSelected, onEdit, onDelete, onSelect, rowRef }) {
   const iniciales = obtenerIniciales(contacto.nombre, contacto.apellido);
   const color = obtenerColorAvatar(contacto.id);
+  const categoriaClase = categoriaClases[contacto.categoria] || "category-badge-otro";
 
   return (
     <tr
@@ -22,7 +31,7 @@ export default function ContactRow({ contacto, isSelected, onEdit, onDelete, onS
       <td data-label="Correo">{contacto.correo}</td>
       <td data-label="Telefono" className="col-phone">{contacto.telefono}</td>
       <td data-label="Categoria" className="col-category">
-        <span className="category-badge">{contacto.categoria}</span>
+        <span className={`category-badge ${categoriaClase}`}>{contacto.categoria}</span>
       </td>
       <td data-label="Acciones" className="actions-cell">
         <div className="contact-actions">
