@@ -1,4 +1,4 @@
-import { obtenerIniciales, obtenerColorAvatar } from "../utils/initials.js";
+import { obtenerIniciales, obtenerColorAvatar } from "../../utils/initials.js";
 
 function formatearFecha(fecha) {
   if (!fecha) {

@@ -1,4 +1,4 @@
-import { CATEGORIAS } from "../data/categories.js";
+import { CATEGORIAS } from "../../data/categories.js";
 
 const ICONS = {
   plus: "M12 5v14m-7-7h14",

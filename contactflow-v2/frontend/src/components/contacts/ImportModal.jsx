@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { parsearContactosCSV } from "../utils/csv.js";
+import { parsearContactosCSV } from "../../utils/csv.js";
 
 export default function ImportModal({ isOpen, onImport, onCancel, isImporting, resultado }) {
   const overlayRef = useRef(null);
